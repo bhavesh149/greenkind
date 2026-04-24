@@ -23,8 +23,10 @@ The API package is **[@greenkind/api](../apps/api)**.
 
 ## 2. Databases
 
-1. In the same project, **Add** → **Database** → **PostgreSQL**. Railway sets `DATABASE_URL` on the service when you [link the variable](https://docs.railway.com/guides/variables#referencing-a-database-url) (or add Postgres’s `DATABASE_URL` to the API service).
-2. **Redis** (recommended for jobs / Bull): **Add** → **Redis** → map its URL to `REDIS_URL` on the API service. If you skip Redis, set `SKIP_REDIS=1` (jobs/queues that use Bull will not run; see [app.module.ts](../apps/api/src/app.module.ts)).
+1. In the same project, **Add** → **Database** → **PostgreSQL**. Postgres gets its own `DATABASE_URL` — that **does not** automatically copy to the API service.
+2. **Required:** on the **API** service (not on Postgres) → **Variables** → **Add** → **Variable reference** (or “Reference” / “Add from service”) → choose your **Postgres** service → select **`DATABASE_URL`**. The variable name in the API service must be exactly **`DATABASE_URL`**. See [Railway: variable references](https://docs.railway.com/guides/variables#referencing-a-database-url).  
+   - If you skip this, pre-deploy will fail with **`P1012` / `Environment variable not found: DATABASE_URL`**, because `prisma migrate deploy` runs on the API container and only sees variables on the **API** service.
+3. **Redis** (recommended for jobs / Bull): **Add** → **Redis** → map its URL to `REDIS_URL` on the **API** service (same pattern: reference, or set manually). If you skip Redis, set `SKIP_REDIS=1` (Bull will not run; see [app.module.ts](../apps/api/src/app.module.ts)).
 
 ## 3. Environment variables (API service)
 
@@ -52,10 +54,11 @@ Set these on the **API** service (Variables tab). `PORT` and `NODE_ENV=productio
 
 ## 6. Health check
 
-`GET /health` (no `/v1` prefix) is used for Railway healthcheck; it reports DB status in the JSON body.
+`GET /health` (no `/v1` prefix) is used for Railway healthcheck; it reports DB status in the JSON body. The API does not block startup on a failed first DB connect (Prisma connects lazily), so the process can still listen and return `degraded` if the database is down—fix `DATABASE_URL` and redeploy.
 
 ## Troubleshooting
 
+- **Replicas never become healthy** / `502` or “service unavailable” on `/health`: check **API → Deploy / Runtime logs** (not just build). Common causes: **missing** `JWT_*`, `FRONTEND_ORIGIN`, or **wrong** `DATABASE_URL` (reference the Postgres `DATABASE_URL` on the **API** service), or a crash before `listen` (read the stack trace).
 - **Build fails on pnpm**: ensure `packageManager` in the root [package.json](../package.json) is respected (`corepack enable` is in the build command).
 - **Module not found for workspace package**: the service **must** build from the **monorepo root**, not `apps/api` alone.
 - **CORS errors**: set `FRONTEND_ORIGIN` to the exact browser origin of the web app (scheme + host, no path).
