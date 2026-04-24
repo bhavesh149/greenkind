@@ -3,8 +3,8 @@
 # https://docs.railway.com/deploy/config-as-code
 
 [build]
-builder = "NIXPACKS"
-buildCommand = "corepack enable && pnpm i --frozen-lockfile && pnpm --filter @greenkind/api run build"
+builder = "RAILPACK"
+buildCommand = "pnpm --filter @greenkind/api run build"
 
 [deploy]
 preDeployCommand = "/bin/sh -c 'pnpm --filter @greenkind/api run db:migrate:deploy'"
