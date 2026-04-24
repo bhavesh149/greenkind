@@ -10,7 +10,6 @@ import {
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UserRole } from '@prisma/client';
 
-import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { Roles } from '../common/decorators/roles.decorator';
 import { ListWinnersQueryDto } from './dto/list-winners-query.dto';
 import { VerifyWinnerDto } from './dto/verify-winner.dto';
