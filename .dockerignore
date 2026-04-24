@@ -1,0 +1,13 @@
+# API Docker build context (monorepo root) — keep image smaller and avoid stale artifacts.
+.git
+**/.git
+node_modules
+**/.next
+**/.turbo
+**/dist
+.DS_Store
+*.log
+.pnpm-store
+.vercel
+coverage
+**/*.tsbuildinfo

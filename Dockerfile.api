@@ -1,0 +1,21 @@
+# GreenKind API — production image (Railway or `docker build -f Dockerfile.api .`)
+# Resolves "Cannot find module .../dist/main" when Railpack/Nixpacks drops build output in the final layer.
+
+FROM node:20-bookworm-slim
+WORKDIR /app
+
+RUN corepack enable && corepack prepare pnpm@9.15.0 --activate
+
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY packages ./packages
+COPY apps ./apps
+
+RUN pnpm install --frozen-lockfile
+RUN pnpm --filter @greenkind/api run build
+
+ENV NODE_ENV=production
+EXPOSE 3000
+
+# Nest output: apps/api/dist/main.js; runtime cwd for relative paths
+WORKDIR /app/apps/api
+CMD ["node", "dist/main.js"]
