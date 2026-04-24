@@ -1,5 +1,5 @@
 # GreenKind API — production image (Railway or `docker build -f Dockerfile.api .`)
-# Resolves "Cannot find module .../dist/main" when Railpack/Nixpacks drops build output in the final layer.
+# Resolves missing dist in the run image when Railpack/Nixpacks drops build output.
 
 FROM node:20-bookworm-slim
 WORKDIR /app
@@ -22,6 +22,6 @@ RUN pnpm --filter @greenkind/api run build
 ENV NODE_ENV=production
 EXPOSE 3000
 
-# Nest output: apps/api/dist/main.js; runtime cwd for relative paths
+# Nest emits dist/src/main.js (tsconfig has no rootDir; see package.json start:prod)
 WORKDIR /app/apps/api
-CMD ["node", "dist/main.js"]
+CMD ["node", "dist/src/main.js"]
