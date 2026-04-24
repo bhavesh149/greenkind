@@ -1,0 +1,247 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@custom-variant dark (&:is(.dark *));
+
+/* -------------------------------------------------------------------------- */
+/* GreenKind tokens (see packages/ui-tokens/tokens.json)                      */
+/* -------------------------------------------------------------------------- */
+:root {
+  /* Moss — primary brand */
+  --gk-brand-50: #edf5f0;
+  --gk-brand-100: #d2e5da;
+  --gk-brand-200: #a8cdb9;
+  --gk-brand-300: #78ad92;
+  --gk-brand-400: #4d8f6e;
+  --gk-brand-500: #2f7a53;
+  --gk-brand-600: #266344;
+  --gk-brand-700: #1e5236;
+  --gk-brand-800: #163b28;
+  --gk-brand-900: #0f2a1c;
+  /* Warm — charity / hope accents (not the same as shadcn "accent" surface) */
+  --gk-warm-50: #fff8eb;
+  --gk-warm-100: #ffefc7;
+  --gk-warm-200: #ffdf8a;
+  --gk-warm-300: #f7c24d;
+  --gk-warm-400: #e8a23b;
+  --gk-warm-500: #c9841f;
+  --gk-radius: 0.75rem;
+  --gk-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --gk-duration: 220ms;
+  /* ParImpact reference (accent + structure — used for links, focus, glows) */
+  --gk-mint: #95d3ba;
+  --gk-charcoal: #101415;
+  --gk-elevated: #1d2022;
+  --gk-stroke: #404944;
+  --gk-mist: #e8eced;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-heading: var(--font-heading);
+  /* Brand + warm scales for utilities: `text-brand-600`, `bg-warm-400`, etc. */
+  --color-brand-50: var(--gk-brand-50);
+  --color-brand-100: var(--gk-brand-100);
+  --color-brand-200: var(--gk-brand-200);
+  --color-brand-300: var(--gk-brand-300);
+  --color-brand-400: var(--gk-brand-400);
+  --color-brand-500: var(--gk-brand-500);
+  --color-brand-600: var(--gk-brand-600);
+  --color-brand-700: var(--gk-brand-700);
+  --color-brand-800: var(--gk-brand-800);
+  --color-brand-900: var(--gk-brand-900);
+  --color-warm-50: var(--gk-warm-50);
+  --color-warm-100: var(--gk-warm-100);
+  --color-warm-200: var(--gk-warm-200);
+  --color-warm-300: var(--gk-warm-300);
+  --color-warm-400: var(--gk-warm-400);
+  --color-warm-500: var(--gk-warm-500);
+  /* Semantic (Impact palette — use across marketing / app / admin) */
+  --color-mint: var(--gk-mint);
+  --color-link: var(--link);
+  --color-link-hover: var(--link-hover);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+  --ease-gk: var(--gk-ease);
+  --default-transition-duration: var(--gk-duration);
+}
+
+/* Light — cool, airy canvas; mint is highlight, not “theme park green” */
+:root {
+  --link: #1a5c40;
+  --link-hover: #134832;
+  --background: #f2f4f3;
+  --foreground: #0f1213;
+  --card: #ffffff;
+  --card-foreground: #0f1213;
+  --popover: #ffffff;
+  --popover-foreground: #0f1213;
+  --primary: var(--gk-brand-600);
+  --primary-foreground: #f5faf6;
+  --secondary: #e0ebe5;
+  --secondary-foreground: #0f1a16;
+  --muted: #e6ece8;
+  --muted-foreground: #3d4f45;
+  --accent: color-mix(in oklab, var(--gk-mint) 15%, #ffffff 85%);
+  --accent-foreground: #0f1a16;
+  --destructive: oklch(0.55 0.2 25);
+  --border: #c9d4cd;
+  --input: #e2ebe6;
+  --ring: var(--gk-brand-500);
+  --chart-1: var(--gk-brand-500);
+  --chart-2: var(--gk-brand-300);
+  --chart-3: var(--gk-warm-400);
+  --chart-4: var(--gk-brand-700);
+  --chart-5: var(--gk-warm-200);
+  --radius: var(--gk-radius);
+  --sidebar: #eef4f0;
+  --sidebar-foreground: #0f1213;
+  --sidebar-primary: var(--gk-brand-600);
+  --sidebar-primary-foreground: #f5faf6;
+  --sidebar-accent: #dbe8df;
+  --sidebar-accent-foreground: #0f1213;
+  --sidebar-border: #b9cdc2;
+  --sidebar-ring: var(--gk-brand-500);
+}
+
+/* Dark — ParImpact-style: charcoal base, raised panels, mint ring + links */
+.dark {
+  --link: var(--gk-mint);
+  --link-hover: #b8e8d4;
+  --background: var(--gk-charcoal);
+  --foreground: var(--gk-mist);
+  --card: var(--gk-elevated);
+  --card-foreground: var(--gk-mist);
+  --popover: #22282b;
+  --popover-foreground: var(--gk-mist);
+  /* Primary actions: deep forest (readable on dark; pairs with mint focus ring) */
+  --primary: #3a8264;
+  --primary-foreground: #0a0c0d;
+  --secondary: #2a2f32;
+  --secondary-foreground: var(--gk-mist);
+  --muted: #191e21;
+  --muted-foreground: #9ba3a6;
+  /* Accent surfaces: subtle mint-tinged, not “gold chip” */
+  --accent: #1f2a28;
+  --accent-foreground: #b8e8d4;
+  --destructive: oklch(0.62 0.19 25);
+  --border: #343a3e;
+  --input: #1a1f22;
+  --ring: var(--gk-mint);
+  --chart-1: #95d3ba;
+  --chart-2: #3a8264;
+  --chart-3: #c9a227;
+  --chart-4: #4d8f6e;
+  --chart-5: #6b7f78;
+  --sidebar: #141a1b;
+  --sidebar-foreground: var(--gk-mist);
+  --sidebar-primary: var(--gk-mint);
+  --sidebar-primary-foreground: #0a0c0d;
+  --sidebar-accent: #1c2225;
+  --sidebar-accent-foreground: var(--gk-mist);
+  --sidebar-border: #2a3135;
+  --sidebar-ring: var(--gk-mint);
+}
+
+/* App-wide depth (not auth-only): soft mint + depth wash in both themes */
+@layer base {
+  :root {
+    --gk-surface-veil: radial-gradient(
+      ellipse 95% 55% at 50% -35%,
+      color-mix(in oklab, var(--gk-mint) 5%, transparent),
+      transparent 58%
+    );
+  }
+  .dark {
+    --gk-surface-veil:
+      radial-gradient(
+        ellipse 100% 75% at 50% -28%,
+        color-mix(in oklab, var(--gk-mint) 8%, transparent),
+        transparent 52%
+      ),
+      radial-gradient(
+        ellipse 55% 45% at 100% 0%,
+        color-mix(in oklab, #1e4d3a 18%, transparent),
+        transparent 55%
+      );
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply min-h-dvh text-foreground font-sans;
+    background-color: var(--background);
+    background-image: var(--gk-surface-veil);
+    background-attachment: fixed;
+  }
+  ::selection {
+    background-color: color-mix(in oklab, var(--gk-mint) 32%, transparent);
+    color: var(--foreground);
+  }
+  .dark ::selection {
+    color: var(--card-foreground);
+  }
+  html {
+    @apply font-sans;
+    background-color: var(--background);
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-heading tracking-tight;
+  }
+}
+
+@layer utilities {
+  /* Scrollable regions without visible track (mobile drawers, etc.) */
+  .gk-scrollbar-hidden {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .gk-scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+}

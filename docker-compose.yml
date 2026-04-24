@@ -1,0 +1,26 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: greenkind-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: greenkind
+    ports:
+      - '5432:5432'
+    volumes:
+      - greenkind_pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    container_name: greenkind-redis
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+    volumes:
+      - greenkind_redis:/data
+
+volumes:
+  greenkind_pgdata:
+  greenkind_redis:
