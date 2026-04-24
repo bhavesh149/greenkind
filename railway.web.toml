@@ -1,0 +1,14 @@
+# @greenkind/web (Next.js). Use only for the *web* Railway service — not for the API.
+# In Railway: @greenkind/web → Settings → config file = this path, OR paste the Build/Start lines below.
+# Monorepo root; do not set Root Directory to apps/web.
+
+[build]
+builder = "NIXPACKS"
+buildCommand = "corepack enable && pnpm i --frozen-lockfile && pnpm --filter @greenkind/web run build"
+
+[deploy]
+startCommand = "pnpm --filter @greenkind/web start"
+healthcheckPath = "/"
+healthcheckTimeout = 120
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 3

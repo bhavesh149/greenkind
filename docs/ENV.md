@@ -2,6 +2,8 @@
 
 Paths: copy `apps/api/.env.example` → `apps/api/.env`, and `apps/web/.env.example` → `apps/web/.env.local`. The **root** `.env.example` is a quick reference only.
 
+**Deploy on Railway:** [RAILWAY.md](./RAILWAY.md) — API uses [railway.toml](../railway.toml); the Next app on Railway uses [railway.web.toml](../railway.web.toml).
+
 ---
 
 ## 1. Local database — `DATABASE_URL`
