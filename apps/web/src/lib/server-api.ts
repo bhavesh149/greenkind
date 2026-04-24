@@ -3,11 +3,18 @@ import { cookies } from 'next/headers';
 import type { CharityCard } from '@/lib/charity-types';
 
 /**
- * Server-side fetch to the API (bypasses Next rewrites). Uses the same base as rewrites in
- * next.config — set API_REWRITE_URL in .env.local when the API is not on 127.0.0.1:3000.
+ * Server-side fetch to the API. Default is local Nest on :3000; in production set `API_REWRITE_URL`
+ * to your API origin (Vercel, Railway, etc.) so RSC fetches are not `127.0.0.1` during SSR.
+ * On Vercel without `API_REWRITE_URL`, same-origin is used so `/v1` rewrites in `next.config` apply.
  */
 export function getInternalApiBase(): string {
-  return process.env.API_REWRITE_URL ?? 'http://127.0.0.1:3000';
+  if (process.env.API_REWRITE_URL) {
+    return process.env.API_REWRITE_URL;
+  }
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+  return 'http://127.0.0.1:3000';
 }
 
 export async function fetchPublicV1Json<T>(path: string, init?: RequestInit): Promise<T> {

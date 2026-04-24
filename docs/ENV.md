@@ -154,6 +154,8 @@ stripe trigger checkout.session.completed
 
 **Browser calls:** the Next app rewrites `GET/POST /v1/...` to the API (see [next.config.ts](../apps/web/next.config.ts)). Default target is `http://127.0.0.1:3000`. Set **`API_REWRITE_URL`** in `apps/web/.env.local` if the API is not there (e.g. Docker, different host, or a different `PORT` in `apps/api/.env`).
 
+**Vercel / production:** add the same variable in the Vercel project settings (Build & Runtime) with your **deployed API** base URL (`https://…`). The marketing `/charities` routes are rendered on demand and call the API at request time; localhost is not available on the build machine. If `API_REWRITE_URL` is omitted, server-side fetches fall back to `https://$VERCEL_URL` so Next can proxy `/v1` to your API when rewrites are configured; setting `API_REWRITE_URL` explicitly is still recommended.
+
 **Optional:** `NEXT_PUBLIC_APP_URL` for absolute links in emails (later).
 
 ---

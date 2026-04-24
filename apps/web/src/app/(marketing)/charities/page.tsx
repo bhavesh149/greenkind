@@ -6,6 +6,9 @@ import type { CharitiesListResponse } from '@/lib/charity-types';
 import { fetchPublicV1Json } from '@/lib/server-api';
 import { cn } from '@/lib/utils';
 
+/** No static prerender: build env has no API; set `API_REWRITE_URL` on the host for runtime fetches. */
+export const dynamic = 'force-dynamic';
+
 export default async function CharitiesPage() {
   const data = await fetchPublicV1Json<CharitiesListResponse>('/charities?limit=50&page=1');
   return (

@@ -7,6 +7,9 @@ import { fetchCharityBySlug, getSessionUserOnServer } from '@/lib/server-api';
 
 import { CharityDonateForm } from './charity-donate-form';
 
+/** Match /charities list: fetch API at request time, not at build (see `API_REWRITE_URL`). */
+export const dynamic = 'force-dynamic';
+
 type Props = {
   params: Promise<{ slug: string }>;
   searchParams: Promise<{ donation?: string }>;
