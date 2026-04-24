@@ -45,3 +45,7 @@ coverage
 # Misc
 *.pem
 .vercel
+
+# Local / private (not in remote)
+PRD_Cursor_Brief.md
+*PRD*Cursor*.md

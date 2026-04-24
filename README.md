@@ -52,4 +52,4 @@ Design tokens for GreenKind are defined in CSS (`apps/web/src/app/globals.css`, 
 
 **Environment variables (where each value comes from):** see [docs/ENV.md](docs/ENV.md).
 
-Product requirements: see [PRD_Cursor_Brief.md](./PRD_Cursor_Brief.md).
+Product requirements doc (`PRD_Cursor_Brief.md`) is local-only and not committed; keep a copy in your drive or product wiki if you need to share it.
