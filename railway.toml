@@ -1,10 +1,12 @@
 # @greenkind/api (Nest) only. If you also deploy the Next app on Railway, use [railway.web.toml](railway.web.toml) for the *web* service (see docs/RAILWAY.md).
 # Monorepo root; no Root Directory to apps/api.
 # https://docs.railway.com/deploy/config-as-code
+# Use RAILPACK, not NIXPACKS: Nixpacks’ generated Dockerfile can end with a COPY
+# that overwrites the Nest `apps/api/dist` output, causing "Cannot find module .../dist/main".
 
 [build]
 builder = "RAILPACK"
-buildCommand = "pnpm --filter @greenkind/api run build"
+buildCommand = "corepack enable && pnpm i --frozen-lockfile && pnpm --filter @greenkind/api run build"
 
 [deploy]
 preDeployCommand = "/bin/sh -c 'pnpm --filter @greenkind/api run db:migrate:deploy'"

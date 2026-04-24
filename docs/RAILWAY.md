@@ -4,8 +4,8 @@ The repo can host **one or two** services from the same GitHub project:
 
 | Service | Config file | Role |
 | -------- | ------------ | ---- |
-| **@greenkind/api** | [railway.toml](../railway.toml) | Nest, Prisma migrations in pre-deploy, `GET /health` |
-| **@greenkind/web** | [railway.web.toml](../railway.web.toml) | Next.js — **do not** reuse `railway.toml` or the web build will be wrong. |
+| **@greenkind/api** | [railway.toml](../railway.toml) | Nest, Prisma migrations in pre-deploy, `GET /health` — use builder **RAILPACK** (Nixpacks can wipe `dist/`; see [railway.toml](../railway.toml) comment). |
+| **@greenkind/web** | [railway.web.toml](../railway.web.toml) | Next.js — **do not** reuse the API’s `railway.toml`. |
 
 **Two services in one project (your case):** open **@greenkind/web** → **Settings** → under **Config as code** / **Build & Deploy**, point this service at **`railway.web.toml`**, or paste the **Build** and **Start** commands from that file. Leave **@greenkind/api** using [railway.toml](../railway.toml) (migrations + `start:prod`). If a service picks up the API config by mistake, the Next build will try to run Nest.
 

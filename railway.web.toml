@@ -3,7 +3,7 @@
 # Monorepo root; do not set Root Directory to apps/web.
 
 [build]
-builder = "NIXPACKS"
+builder = "RAILPACK"
 buildCommand = "corepack enable && pnpm i --frozen-lockfile && pnpm --filter @greenkind/web run build"
 
 [deploy]
