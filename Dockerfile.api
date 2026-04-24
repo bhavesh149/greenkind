@@ -4,6 +4,12 @@
 FROM node:20-bookworm-slim
 WORKDIR /app
 
+# Prisma (migrate + client) needs OpenSSL at runtime; slim image omits it → schema-engine / SSL errors.
+RUN apt-get update -y && apt-get install -y --no-install-recommends \
+    openssl \
+    ca-certificates \
+  && rm -rf /var/lib/apt/lists/*
+
 RUN corepack enable && corepack prepare pnpm@9.15.0 --activate
 
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
